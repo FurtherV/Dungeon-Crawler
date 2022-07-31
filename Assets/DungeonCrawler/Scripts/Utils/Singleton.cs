@@ -2,12 +2,17 @@
 
 namespace DungeonCrawler.Scripts.Utils
 {
-    public abstract class BehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         public static T Instance { get; private set; }
 
         #region Event Functions
 
+        protected virtual void AwakeLate()
+        {
+            
+        }
+        
         protected virtual void Awake()
         {
             if (Instance != null)
@@ -17,6 +22,7 @@ namespace DungeonCrawler.Scripts.Utils
             }
 
             Instance = this as T;
+            AwakeLate();
         }
 
         protected virtual void OnApplicationQuit()
@@ -28,7 +34,7 @@ namespace DungeonCrawler.Scripts.Utils
         #endregion
     }
 
-    public abstract class BehaviourSingletonPersistent<T> : BehaviourSingleton<T> where T : MonoBehaviour
+    public abstract class SingletonPersistent<T> : Singleton<T> where T : MonoBehaviour
     {
         #region Event Functions
 
